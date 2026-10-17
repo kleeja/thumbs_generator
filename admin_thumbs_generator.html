@@ -1,0 +1,112 @@
+<div class="kj-page-header">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./">{lang.R_CPINDEX}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{olang.R_THUMBS_GENERATOR}</li>
+            </ol>
+        </nav>
+        <h1 class="kj-page-title">{olang.R_THUMBS_GENERATOR}</h1>
+    </div>
+</div>
+
+<IF NAME="thumbs_generator_library"><ELSE>
+<div class="alert alert-danger d-flex align-items-start gap-2" role="alert">
+    <i class="fa-solid fa-circle-xmark kj-alert-icon" aria-hidden="true"></i>
+    <div>{olang.THUMBS_GENERATOR_NO_LIBRARY}</div>
+</div>
+</IF>
+
+<IF NAME="thumbs_generator_folder_note">
+<div class="alert alert-warning d-flex align-items-start gap-2" role="alert">
+    <i class="fa-solid fa-triangle-exclamation kj-alert-icon" aria-hidden="true"></i>
+    <div>{thumbs_generator_folder_note}</div>
+</div>
+</IF>
+
+<div class="row g-4 align-items-start">
+    <!-- the generator: assets/thumbs_generator.js sends the form one short step after the other, and shows how far it is -->
+    <div class="col-xl-8">
+        <section class="card" data-tg data-tg-total="{thumbs_generator_total}" data-tg-msg-progress="{olang.THUMBS_GENERATOR_PROGRESS}" data-tg-msg-done="{olang.THUMBS_GENERATOR_DONE}" data-tg-msg-failed="{olang.THUMBS_GENERATOR_FAILED_NOTE}" data-tg-msg-missing="{olang.THUMBS_GENERATOR_MISSING_NOTE}" data-tg-msg-error="{olang.THUMBS_GENERATOR_ERROR}" data-tg-msg-session="{olang.THUMBS_GENERATOR_SESSION}" data-tg-msg-continue="{olang.THUMBS_GENERATOR_CONTINUE}" data-tg-msg-leave="{olang.THUMBS_GENERATOR_LEAVE}">
+            <div class="card-body">
+                <div class="d-flex align-items-start gap-3">
+                    <span class="kj-icon-tile"><i class="fa-solid fa-images" aria-hidden="true"></i></span>
+                    <p class="mb-0">{olang.THUMBS_GENERATOR_INTRO}</p>
+                </div>
+
+                <IF NAME="thumbs_generator_total"><ELSE>
+                <div class="alert alert-info d-flex align-items-start gap-2 mt-4 mb-0" role="status">
+                    <i class="fa-solid fa-circle-info kj-alert-icon" aria-hidden="true"></i>
+                    <div>{olang.THUMBS_GENERATOR_NO_IMAGES}</div>
+                </div>
+                </IF>
+
+                <div class="mt-4 d-none" data-tg-progress>
+                    <div class="d-flex flex-wrap justify-content-between gap-2 small mb-2">
+                        <span class="fw-semibold" data-tg-state>{olang.THUMBS_GENERATOR_RUNNING}</span>
+                        <span class="text-body-secondary" data-tg-checked role="status" aria-live="polite"></span>
+                    </div>
+                    <div class="progress" role="progressbar" aria-label="{olang.R_THUMBS_GENERATOR}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-tg-meter>
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%" data-tg-bar></div>
+                    </div>
+
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item kj-kv">
+                            <span><i class="fa-solid fa-fw fa-circle-check text-success" aria-hidden="true"></i> {olang.THUMBS_GENERATOR_CREATED}</span>
+                            <span data-tg-count="created">0</span>
+                        </li>
+                        <li class="list-group-item kj-kv">
+                            <span><i class="fa-solid fa-fw fa-image text-body-secondary" aria-hidden="true"></i> {olang.THUMBS_GENERATOR_EXISTING}</span>
+                            <span data-tg-count="existing">0</span>
+                        </li>
+                        <li class="list-group-item kj-kv">
+                            <span><i class="fa-solid fa-fw fa-file-circle-question text-warning" aria-hidden="true"></i> {olang.THUMBS_GENERATOR_MISSING}</span>
+                            <span data-tg-count="missing">0</span>
+                        </li>
+                        <li class="list-group-item kj-kv">
+                            <span><i class="fa-solid fa-fw fa-circle-xmark text-danger" aria-hidden="true"></i> {olang.THUMBS_GENERATOR_FAILED}</span>
+                            <span data-tg-count="failed">0</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="alert d-none mt-4 mb-0" role="alert" data-tg-result></div>
+            </div>
+
+            <form method="post" action="{thumbs_generator_action}" class="card-footer kj-form-actions" data-tg-form>
+                <button type="submit" class="btn btn-primary"<IF NAME="thumbs_generator_can_run"><ELSE> disabled</IF>>
+                    <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span data-tg-label>{olang.THUMBS_GENERATOR_START}</span>
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- what the generator works with -->
+    <div class="col-xl-4">
+        <section class="card">
+            <div class="card-header kj-card-header">
+                <h2 class="kj-card-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> {olang.THUMBS_GENERATOR_DETAILS}</h2>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item kj-kv">
+                    <span>{olang.THUMBS_GENERATOR_IMAGES}</span>
+                    <span>{thumbs_generator_total}</span>
+                </li>
+                <li class="list-group-item kj-kv">
+                    <span>{olang.THUMBS_GENERATOR_SIZE}</span>
+                    <span dir="ltr">{thumbs_generator_width} × {thumbs_generator_height}</span>
+                </li>
+                <li class="list-group-item kj-kv">
+                    <span>{olang.THUMBS_GENERATOR_LIBRARY}</span>
+                    <span><IF NAME="thumbs_generator_library">{thumbs_generator_library}<ELSE>—</IF></span>
+                </li>
+            </ul>
+            <div class="card-footer d-flex flex-wrap gap-3 small">
+                <a href="./?cp=options&amp;smt=upload">{olang.THUMBS_GENERATOR_CHANGE_SIZE}</a>
+                <a href="./?cp=d_img_ctrl">{lang.R_IMG_CTRL}</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="{thumbs_generator_script}"></script>
